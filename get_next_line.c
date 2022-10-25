@@ -15,22 +15,24 @@
 
 char	*get_next_line(int fd)
 {
-	size_t		read_check;
-	size_t		res_len;
+	int		read_check;
 	int			check;
 	char		*buf;
-	static char	*remains = NULL;
+	static char	*remains;
 	char		*res;
+	int			i = -1;
 
 	
-	res_len = 0;
 	check = -1;
-//	res = malloc(sizeof(char));
-//	if (!res)
-//		return (NULL);
+	res = malloc(sizeof(char));
+	if (!res)
+		return (NULL);
+	remains = malloc(sizeof(char *));
+	if (!remains)
+		return (NULL);
 //	res = ft_add_remains(res, remains, &res_len);
 //	free(remains);
-	while (check == -1)
+	while (check == -1 && ++i < 10)
 	{
 		buf = malloc(sizeof(char) * buffer_size);
 		if (!buf)
@@ -43,6 +45,7 @@ char	*get_next_line(int fd)
 		free(buf);
 	//	printf("GNL > [%s]\n", res);
 		printf("check > [%d]\n", check);
+		printf("remains> [%s]\n", remains);
 	}
 	return (res);
 }

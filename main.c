@@ -9,6 +9,8 @@ int	main()
 	int	i = -1;
 
 	fd = open("test_file", O_RDONLY);
+	if (fd == -1)
+		return(2);
 	test = get_next_line(fd);
 	while (++i < 23)
 		printf("%c", test[i]);

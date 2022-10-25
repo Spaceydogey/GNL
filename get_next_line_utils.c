@@ -13,7 +13,7 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int	ft_strlen(const char *s)
+int	ft_strlen(const char *s)
 {
 	int	i;
 
@@ -23,6 +23,11 @@ static int	ft_strlen(const char *s)
 	return (i);
 }
 
+char	*ft_add_remains(char *str, char *remain)
+{
+//la meme que to_join
+}
+
 char	*to_join(char *str, char *remain)
 {
 	int	len_to_add;
@@ -30,23 +35,17 @@ char	*to_join(char *str, char *remain)
 	int	i;
 	char *res;
 
-	len_to_add = 0;
+	len_to_add = -1;
 	len_to_remain = 0;
-	while (len_to_add < buffer_size)
-	{	
+	while (++len_to_add < buffer_size)
 		if (str[len_to_add] == '\n' || str[len_to_add] == '\0')
-		{	
-			len_to_add++;
 			break;
-		}
-		len_to_add++;
-	}
 	len_to_remain = buffer_size - len_to_add;
 	res = malloc(sizeof(char) * (len_to_add + 1));
 	if (!res)
 		return (NULL);
 	i = -1;
-	while (++i < len_to_add)
+	while (++i <= len_to_add)
 		res[i] = str[i];
 	res[i] = '\0';
 	i = -1;
@@ -65,7 +64,7 @@ char	*ft_strjoin(char *s1, char *s2, int *check)
 	int	j;
 	int	len_join;
 
-	if (!s1 || !s2 || (!s1 && !s2))
+	if (!s1 || !s2)
 		return (NULL);
 	len_join = ft_strlen(s1) + ft_strlen(s2);
 	strjoin = malloc(sizeof(char) * (len_join + 1));
@@ -78,13 +77,12 @@ char	*ft_strjoin(char *s1, char *s2, int *check)
 	j = -1;
 	while (s2[++j])
 		strjoin[i++] = s2[j];
-	strjoin[i] = '\0';	
+	strjoin[i] = '\0';
 	if (strjoin[i - 1] == '\n')
 	{
 		*check = 0;
 		return (strjoin);
 	}
-    *check = -1;
 	return (strjoin);
 }
 
@@ -139,9 +137,4 @@ char	*ft_strljoin(char *dst, char *src, size_t *res_len, int *check)
 	}
     *check = -1;
 	return (dst);
-}*/
-
-/*char	*ft_add_remains(char *dst, char *remains, size_t *res_len)
-{
-
 }*/
