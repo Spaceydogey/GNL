@@ -11,121 +11,60 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
-char	*ft_substr(char *s, unsigned int start, size_t len)
+int	ft_len_to_add(char *str)
 {
-	char	*res;
-	size_t	i;
-	size_t	len_to_check;
+	int	len_to_add;
 
-	i = 0;
-	len_to_check = 0;
-	if (!s)
-		return (NULL);
-	while (start < ft_strlen(s)
-		&& s[start + len_to_check] && len_to_check < len)
-		len_to_check++;
-	res = malloc(sizeof(char) * (len_to_check + 1));
-	if (!res)
-		return (NULL);
-	if (start < ft_strlen(s))
+	len_to_add = 0;
+	while (len_to_add < buffer_size)
 	{
-		while (s[start + i] && i < len_to_check)
+		if (str[len_to_add] == '\n' || str[len_to_add] == '\0')
 		{
-			res[i] = s[start + i];
-			i++;
+			len_to_add++;
+			break ;
 		}
+		len_to_add++;
 	}
-	res[i] = '\0';
-	free(s);
-	return (res);
+	return (len_to_add);
 }
 
-char	*ft_strdup(const char *s, int *check)
+char	*add_to_line(char *res, char *remains, int *check, int fd)
 {
-	int		len;
-	int		i;
-	char	*res;
+	while (*check == -1)
+	{
+		int		read_check;
+		int		len_to_add;
+		char	buf[buffer_size + 1];
 
-	len = 0;
-	i = 0;
-	while (s[len])
-	{
-		if (s[len] == '\n')
+		ft_bzero(buf, buffer_size + 1);
+		read_check = read(fd, buf, buffer_size);
+		if (read_check == -1)
+			return (NULL);
+		len_to_add = ft_len_to_add(buf);
+		ft_strlcpy(remains, &buf[(len_to_add)], buffer_size + 1);
+		ft_strlcpy(buf, buf, len_to_add + 1);
+		res = ft_strjoin(res, buf, check);
+		if (read_check == 0)
 		{
-			len++;
-			break;
+			ft_bzero(remains, buffer_size + 1);
+			break ;
 		}
-		len++;
-	}
-//	printf("len >>>>> %d\n",len);
-	res = malloc(sizeof(char) * (len + 1));
-	if (!res)
-		return (0);
-	while (i < len) 
-	{
-		res[i] = s[i];
-//		printf("while :i >>>> %d\n", i);
-		i++;
-	}
-//	printf("last :i >>>> %d\n", i);
-	res[i] = '\0';
-	if (res[i - 1] == '\n')
-	{
-		i = i - 1;
-		*check = i;
-	//	printf("i >>>> %d\n", i);
-	//	printf("check >>>> %d\n", *check);
-		return (res);
 	}
 	return (res);
 }
 
 char	*get_next_line(int fd)
 {
-	int		read_check;
 	int			check;
-	int		len_to_add;
-	char		*buf;
-	static char	*remains;
+	static char	remains[buffer_size + 1];
 	char		*res;
 
 	check = -1;
-	if (!remains)
-	{
-		remains = malloc(sizeof(char *));
-		if (!remains)
-			return (NULL);
-	}
-//	printf("remains > [%s]\n", remains);
 	res = ft_strdup(remains, &check);
-	if (check != -1)
-	{
-		len_to_add = ft_strlen(&remains[check + 1]);
-		remains = ft_substr(remains, check + 1, len_to_add);
-		if (!remains)
-			return (NULL);
-//		printf("remains > [%s]\n", remains);
-		return(res);
-	}
-	free(remains);
-	while (check == -1)
-	{
-		buf = malloc(sizeof(char) * buffer_size);
-		if (!buf)
-			return (NULL);
-		read_check = read(fd, buf, buffer_size);
-		if (read_check == -1)
-			return (NULL);
-		if (read_check == 0)
-			return (res);
-		len_to_add = ft_len_to_add(buf);
-		remains = ft_add_remains(buf, len_to_add);
-//		printf("hi > [%s]\n", remains);
-		buf = ft_to_join(buf, len_to_add);
-		res  = ft_strjoin(res, buf, &check);
-		free(buf);
-	}
+	ft_strlcpy(remains, &remains[check + 1], buffer_size + 1);
+	res = add_to_line(res, remains, &check, fd);
+	if (res[0] == '\0')
+		return (NULL);
 	return (res);
 }

@@ -23,53 +23,66 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_len_to_add(char *str)
+size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 {
-	int	len_to_add;
+	size_t	i;
+	size_t	srclen;
 
-	len_to_add = 0;
-	while (len_to_add < buffer_size)
+	i = -1;
+	srclen = -1;
+	while (src[++srclen])
+		;
+	if (dstsize == 0)
+		return (srclen);
+	while (++i < dstsize - 1 && src[i])
+		dst[i] = src[i];
+	dst[i] = '\0';
+	return (srclen);
+}
+
+char	*ft_strdup(char *s, int *check)
+{
+	int		len;
+	int		i;
+	char	*res;
+
+	len = 0;
+	i = 0;
+	while (s[len])
 	{
-		if (str[len_to_add] == '\n' || str[len_to_add] == '\0')
+		if (s[len] == '\n')
 		{
-			len_to_add++;
+			len++;
 			break;
 		}
-		len_to_add++;
+		len++;
 	}
-	return (len_to_add);
-}
-
-char	*ft_add_remains(char *str, int len_to_add)
-{
-	char	*remain;
-	int		len_to_remain;
-	int		i;
-
-	len_to_remain = buffer_size - len_to_add;
-	remain = malloc(sizeof(char) * (len_to_remain + 1));
-	if (!remain)
-		return (NULL);
-	i = -1;
-	while (++i < len_to_remain)
-		remain[i] = str[len_to_add + i];
-	remain[i] = '\0';
-	return (remain);
-}
-
-char	*ft_to_join(char *str, int len_to_add)
-{
-	int	i;
-	char *res;
-
-	res = malloc(sizeof(char) * (len_to_add + 1));
+	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	i = -1;
-	while (++i < len_to_add)
-		res[i] = str[i];
+	while (i < len) 
+	{
+		res[i] = s[i];
+		i++;
+	}
 	res[i] = '\0';
+	if (len > 0 && res[i - 1] == '\n')
+		*check = i - 1;
 	return (res);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t			i;
+	char			*res;
+
+	if (n == 0)
+		return ;
+	i = -1;
+	res = s;
+	while (++i < n)
+		res[i] = '\0';
+	return ;
 }
 
 char	*ft_strjoin(char *s1, char *s2, int *check)
@@ -93,63 +106,10 @@ char	*ft_strjoin(char *s1, char *s2, int *check)
 	while (s2[++j])
 		strjoin[i++] = s2[j];
 	strjoin[i] = '\0';
-	if (strjoin[i - 1] == '\n' || strjoin[i - 1] == '\0')
+	if (len_join > 0 && strjoin[i - 1] == '\n')
 	{
 		*check = 0;
 		return (strjoin);
 	}
 	return (strjoin);
 }
-
-/*
-char	*ft_strljoin(char *dst, char *src, size_t *res_len, int *check)
-{
-	char	*tmp;
-	size_t	len_join;
-	size_t	len_to_add;
-	size_t	len_to_remain;
-	size_t	i;
-
-	if (!src)
-		return (NULL);
-	len_to_add = 0;
-	while (len_to_add < buffer_size)
-	{	
-		if (src[len_to_add] == '\n' || src[len_to_add] == '\0')
-		{	
-			len_to_add++;
-			break;
-		}
-		len_to_add++;
-	}
-	len_to_remain = buffer_size - len_to_add;
-	len_join = *res_len + len_to_add;
-	tmp = malloc(sizeof(char) * (*res_len));
-	if (!tmp)
-		return (NULL);
-	i = -1;
-	while (++i < *res_len)
-		tmp[i] = dst[i];
-	free(dst);
-	dst = malloc(sizeof(char) * (len_join));
-	if (!dst)
-		return (NULL);
-	i = -1;
-	while (++i < *res_len)
-		dst[i] = tmp[i];
-	free(tmp);
-	i = 0;
-	while (i < len_to_add)
-	{
-		dst[*res_len] = src[i];
-		i++;
-		*res_len = *res_len + 1;
-	}
-	if (dst[*res_len] == '\n')
-	{
-		*check = 0;
-		return (dst);
-	}
-    *check = -1;
-	return (dst);
-}*/
