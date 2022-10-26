@@ -12,7 +12,28 @@ int	main()
 	if (fd == -1)
 		return(2);
 	test = get_next_line(fd);
-	while (++i < 23)
-		printf("%c", test[i]);
+	printf("1:%s", test);
+	free(test);
+	test = get_next_line(fd);
+	printf("2:%s", test);
+	free(test);
+	test = get_next_line(fd);
+	printf("3:%s", test);
+	free(test);
+	test = get_next_line(fd);
+	printf("4:%s", test);
+	free(test);
+	test = get_next_line(fd);
+	printf("5:%s", test);
+	free(test);
+	test = get_next_line(fd);
+	free(test);
+	printf("6:%s", test);
+	test = get_next_line(fd);
+	free(test);
+	printf("7:%s", test);
+	test = get_next_line(fd);
+	free(test);
+	printf("8:%s", test);
 	close(fd);
 }

@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:30:21 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/25 17:02:00 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/26 12:02:51 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,37 +23,52 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_add_remains(char *str, char *remain)
-{
-//la meme que to_join
-}
-
-char	*to_join(char *str, char *remain)
+int	ft_len_to_add(char *str)
 {
 	int	len_to_add;
-	int	len_to_remain;
+
+	len_to_add = 0;
+	while (len_to_add < buffer_size)
+	{
+		if (str[len_to_add] == '\n' || str[len_to_add] == '\0')
+		{
+			len_to_add++;
+			break;
+		}
+		len_to_add++;
+	}
+	return (len_to_add);
+}
+
+char	*ft_add_remains(char *str, int len_to_add)
+{
+	char	*remain;
+	int		len_to_remain;
+	int		i;
+
+	len_to_remain = buffer_size - len_to_add;
+	remain = malloc(sizeof(char) * (len_to_remain + 1));
+	if (!remain)
+		return (NULL);
+	i = -1;
+	while (++i < len_to_remain)
+		remain[i] = str[len_to_add + i];
+	remain[i] = '\0';
+	return (remain);
+}
+
+char	*ft_to_join(char *str, int len_to_add)
+{
 	int	i;
 	char *res;
 
-	len_to_add = -1;
-	len_to_remain = 0;
-	while (++len_to_add < buffer_size)
-		if (str[len_to_add] == '\n' || str[len_to_add] == '\0')
-			break;
-	len_to_remain = buffer_size - len_to_add;
 	res = malloc(sizeof(char) * (len_to_add + 1));
 	if (!res)
 		return (NULL);
 	i = -1;
-	while (++i <= len_to_add)
+	while (++i < len_to_add)
 		res[i] = str[i];
 	res[i] = '\0';
-	i = -1;
-	remain = malloc(sizeof(char) * (len_to_remain + 1));
-	if (!remain)
-		return (NULL);
-	while (++i < len_to_remain)
-		remain[i] = str[len_to_add + i];
 	return (res);
 }
 
@@ -78,7 +93,7 @@ char	*ft_strjoin(char *s1, char *s2, int *check)
 	while (s2[++j])
 		strjoin[i++] = s2[j];
 	strjoin[i] = '\0';
-	if (strjoin[i - 1] == '\n')
+	if (strjoin[i - 1] == '\n' || strjoin[i - 1] == '\0')
 	{
 		*check = 0;
 		return (strjoin);
