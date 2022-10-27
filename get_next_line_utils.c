@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:30:21 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/26 12:02:51 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:36:21 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,21 @@ char	*ft_strdup(char *s, int *check)
 	char	*res;
 
 	len = 0;
-	i = 0;
+	i = -1;
 	while (s[len])
 	{
 		if (s[len] == '\n')
 		{
 			len++;
-			break;
+			break ;
 		}
 		len++;
 	}
 	res = malloc(sizeof(char) * (len + 1));
 	if (!res)
 		return (NULL);
-	while (i < len) 
-	{
+	while (++i < len)
 		res[i] = s[i];
-		i++;
-	}
 	res[i] = '\0';
 	if (len > 0 && res[i - 1] == '\n')
 		*check = i - 1;
@@ -88,28 +85,27 @@ void	ft_bzero(void *s, size_t n)
 char	*ft_strjoin(char *s1, char *s2, int *check)
 {
 	char	*strjoin;
-	int	i;
-	int	j;
-	int	len_join;
+	int		i;
+	int		j;
+	int		len_join;
 
-	if (!s1 || !s2)
-		return (NULL);
 	len_join = ft_strlen(s1) + ft_strlen(s2);
 	strjoin = malloc(sizeof(char) * (len_join + 1));
 	if (!strjoin)
+	{
+		free(s1);
 		return (NULL);
+	}
 	i = 0;
 	j = -1;
 	while (s1[++j])
 		strjoin[i++] = s1[j];
+	free(s1);
 	j = -1;
 	while (s2[++j])
 		strjoin[i++] = s2[j];
 	strjoin[i] = '\0';
 	if (len_join > 0 && strjoin[i - 1] == '\n')
-	{
 		*check = 0;
-		return (strjoin);
-	}
 	return (strjoin);
 }

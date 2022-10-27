@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 10:24:06 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/26 12:55:25 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:55:48 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_len_to_add(char *str)
 	int	len_to_add;
 
 	len_to_add = 0;
-	while (len_to_add < buffer_size)
+	while (len_to_add < BUFFER_SIZE)
 	{
 		if (str[len_to_add] == '\n' || str[len_to_add] == '\0')
 		{
@@ -31,23 +31,26 @@ int	ft_len_to_add(char *str)
 
 char	*add_to_line(char *res, char *remains, int *check, int fd)
 {
+	int		read_check;
+	int		len_to_add;
+	char	buf[BUFFER_SIZE + 1];
+
 	while (*check == -1)
 	{
-		int		read_check;
-		int		len_to_add;
-		char	buf[buffer_size + 1];
-
-		ft_bzero(buf, buffer_size + 1);
-		read_check = read(fd, buf, buffer_size);
+		ft_bzero(buf, BUFFER_SIZE + 1);
+		read_check = read(fd, buf, BUFFER_SIZE);
 		if (read_check == -1)
+		{
+			free(res);
 			return (NULL);
+		}
 		len_to_add = ft_len_to_add(buf);
-		ft_strlcpy(remains, &buf[(len_to_add)], buffer_size + 1);
+		ft_strlcpy(remains, &buf[(len_to_add)], BUFFER_SIZE + 1);
 		ft_strlcpy(buf, buf, len_to_add + 1);
 		res = ft_strjoin(res, buf, check);
 		if (read_check == 0)
 		{
-			ft_bzero(remains, buffer_size + 1);
+			ft_bzero(remains, BUFFER_SIZE + 1);
 			break ;
 		}
 	}
@@ -57,14 +60,19 @@ char	*add_to_line(char *res, char *remains, int *check, int fd)
 char	*get_next_line(int fd)
 {
 	int			check;
-	static char	remains[buffer_size + 1];
+	static char	remains[BUFFER_SIZE + 1];
 	char		*res;
 
+	if (fd < 0 || BUFFER_SIZE < 1)
+		return (NULL);
 	check = -1;
 	res = ft_strdup(remains, &check);
-	ft_strlcpy(remains, &remains[check + 1], buffer_size + 1);
+	ft_strlcpy(remains, &remains[check + 1], BUFFER_SIZE + 1);
 	res = add_to_line(res, remains, &check, fd);
-	if (res[0] == '\0')
+	if (res[0] == '\0' || !res)
+	{
+		free(res);
 		return (NULL);
+	}
 	return (res);
 }

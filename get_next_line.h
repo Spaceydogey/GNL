@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 10:28:41 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/26 11:11:32 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:37:12 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,13 @@
 # define GET_NEXT_LINE_H
 # include <unistd.h>
 # include <stdlib.h>
-# define buffer_size 16
+# include <limits.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 3
+# endif
 
-int	    ft_strlen(const char *s);
-int	ft_len_to_add(char *str);
+int		ft_strlen(const char *s);
+int		ft_len_to_add(char *str);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 char	*ft_strdup(char *s, int *check);
 void	ft_bzero(void *s, size_t n);
