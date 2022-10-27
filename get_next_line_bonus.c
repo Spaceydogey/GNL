@@ -6,11 +6,11 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 10:24:06 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/27 16:29:41 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/27 16:45:00 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	ft_len_to_add(char *str)
 {
@@ -61,15 +61,15 @@ char	*add_to_line(char *res, char *remains, int *check, int fd)
 char	*get_next_line(int fd)
 {
 	int			check;
-	static char	remains[BUFFER_SIZE + 1];
+	static char	remains[OPEN_MAX][BUFFER_SIZE + 1];
 	char		*res;
 
 	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
 	check = -1;
-	res = ft_strdup(remains, &check);
-	ft_strlcpy(remains, &remains[check + 1], BUFFER_SIZE + 1);
-	res = add_to_line(res, remains, &check, fd);
+	res = ft_strdup(remains[fd], &check);
+	ft_strlcpy(remains[fd], &remains[fd][check + 1], BUFFER_SIZE + 1);
+	res = add_to_line(res, remains[fd], &check, fd);
 	if (res[0] == '\0' || !res)
 	{
 		free(res);
