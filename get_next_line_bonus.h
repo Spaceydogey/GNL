@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:19:48 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/28 11:19:58 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/28 15:03:53 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@
 # endif
 
 int		ft_strlen(const char *s);
-int		ft_len_to_add(char *str);
 size_t	ft_strlcpy(char *dst, char *src, size_t dstsize);
 char	*ft_strdup(char *s, int *check);
 void	ft_bzero(void *s, size_t n);
+int		ft_len_to_add(char *str);
+char	*add_to_line(char *res, char *remains, int *check, int fd);
 char	*ft_strjoin(char *s1, char *s2, int *check);
 char	*get_next_line(int fd);
 
