@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:37:27 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/27 16:29:39 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/28 11:18:56 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	main(void)
 	int		end;
 
 	i = 0;
-	end = 5;
-	fd = open("empty", O_RDONLY);
+	end = 15;
+	fd = open("test_file2", O_RDONLY);
 	while (++i < end)
 	{
 		test = get_next_line(fd);

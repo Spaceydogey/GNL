@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 10:24:06 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/27 16:45:00 by hdelmas          ###   ########.fr       */
+/*   Created: 2022/10/28 11:18:17 by hdelmas           #+#    #+#             */
+/*   Updated: 2022/10/28 11:20:02 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*get_next_line(int fd)
 	res = ft_strdup(remains[fd], &check);
 	ft_strlcpy(remains[fd], &remains[fd][check + 1], BUFFER_SIZE + 1);
 	res = add_to_line(res, remains[fd], &check, fd);
-	if (res[0] == '\0' || !res)
+	if (!res || res[0] == '\0')
 	{
 		free(res);
 		return (NULL);
