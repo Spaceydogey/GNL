@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 10:28:41 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/28 15:04:09 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/31 17:23:31 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <limits.h>
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 3
+# endif
+# if BUFFER_SIZE > 10000
+#  undef BUFFER_SIZE
+#  define BUFFER_SIZE 10000
 # endif
 
 int		ft_strlen(const char *s);

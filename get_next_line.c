@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 10:24:06 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/28 14:56:41 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/31 16:47:29 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	check = -1;
 	res = ft_strdup(remains, &check);
+	if (!res)
+		return (NULL);
 	ft_strlcpy(remains, &remains[check + 1], BUFFER_SIZE + 1);
 	res = add_to_line(res, remains, &check, fd);
 	if (!res || res[0] == '\0')

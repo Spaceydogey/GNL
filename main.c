@@ -6,11 +6,11 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 14:37:27 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/28 14:46:16 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/10/31 17:23:34 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 #include <fcntl.h>
 
@@ -31,7 +31,7 @@ int	main(void)
 	test1 =  malloc(1);
 	test2 =  malloc(1);
 	test3 =  malloc(1);
-	while (test1 || test2 || test3)
+	while (i < 3)
 	{
 		free(test1);
 		free(test2);
