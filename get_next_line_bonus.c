@@ -34,6 +34,7 @@ char	*add_to_line(char *res, char *remains, int *check, int fd)
 	int		read_check;
 	int		len_to_add;
 	char	buf[BUFFER_SIZE + 1];
+	char	*tmp;
 
 	while (*check == -1)
 	{
@@ -48,7 +49,9 @@ char	*add_to_line(char *res, char *remains, int *check, int fd)
 		len_to_add = ft_len_to_add(buf);
 		ft_strlcpy(remains, &buf[(len_to_add)], BUFFER_SIZE + 1);
 		ft_strlcpy(buf, buf, len_to_add + 1);
-		res = ft_strjoin(res, buf, check);
+		tmp = ft_strjoin(res, buf, check);
+		free(res);
+		res = tmp;
 		if (read_check == 0)
 		{
 			ft_bzero(remains, BUFFER_SIZE + 1);

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 int	ft_strlen(const char *s)
 {
@@ -92,15 +91,11 @@ char	*ft_strjoin(char *s1, char *s2, int *check)
 	len_join = ft_strlen(s1) + ft_strlen(s2);
 	strjoin = malloc(sizeof(char) * (len_join + 1));
 	if (!strjoin)
-	{
-		free(s1);
 		return (NULL);
-	}
 	i = 0;
 	j = -1;
 	while (s1[++j])
 		strjoin[i++] = s1[j];
-	free(s1);
 	j = -1;
 	while (s2[++j])
 		strjoin[i++] = s2[j];

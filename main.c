@@ -28,14 +28,9 @@ int	main(void)
 	fd1 = open("JKRowling_HP3.txt", O_RDONLY);
 	fd2 = open("JKRowling_HP1.txt", O_RDONLY);
 	fd3 = open("king_james_bible.txt", O_RDONLY);
-	test1 =  malloc(1);
-	test2 =  malloc(1);
-	test3 =  malloc(1);
-	while (i < 3)
+	while (i < 100)
 	{
-		free(test1);
-		free(test2);
-		free(test3);
+	
 		test1 = get_next_line(fd1);
 		test2 = get_next_line(fd2);
 		test3 = get_next_line(fd3);
@@ -45,6 +40,9 @@ int	main(void)
 		printf("\n");
 		printf("%d:%s", i, test3);
 		printf("\n");
+		free(test1);
+		free(test2);
+		free(test3);
 		i++;
 	}	
 	close(fd1);
