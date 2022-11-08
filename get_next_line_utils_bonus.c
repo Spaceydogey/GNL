@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:19:16 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/28 15:03:54 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/11/08 13:40:39 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ size_t	ft_strlcpy(char *dst, char *src, size_t dstsize)
 	return (srclen);
 }
 
-char	*ft_strdup(char *s, int *check)
+char	*join_strdup(char *s, int *check)
 {
 	int		len;
 	int		i;
@@ -81,7 +81,7 @@ void	ft_bzero(void *s, size_t n)
 	return ;
 }
 
-char	*ft_strjoin(char *s1, char *s2, int *check)
+char	*join_strjoin(char *s1, char *s2, int *check)
 {
 	char	*strjoin;
 	int		i;
