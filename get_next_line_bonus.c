@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:18:17 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/31 16:48:04 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/11/08 13:49:43 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ char	*add_to_line(char *res, char *remains, int *check, int fd)
 	int		read_check;
 	int		len_to_add;
 	char	buf[BUFFER_SIZE + 1];
-	char	*tmp;
 
 	while (*check == -1)
 	{
@@ -49,9 +48,7 @@ char	*add_to_line(char *res, char *remains, int *check, int fd)
 		len_to_add = ft_len_to_add(buf);
 		ft_strlcpy(remains, &buf[(len_to_add)], BUFFER_SIZE + 1);
 		ft_strlcpy(buf, buf, len_to_add + 1);
-		tmp = ft_strjoin(res, buf, check);
-		free(res);
-		res = tmp;
+		res = join_strjoin(res, buf, check);
 		if (read_check == 0)
 		{
 			ft_bzero(remains, BUFFER_SIZE + 1);
@@ -70,7 +67,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
 	check = -1;
-	res = ft_strdup(remains[fd], &check);
+	res = join_strdup(remains[fd], &check);
 	if (!res)
 		return (NULL);
 	ft_strlcpy(remains[fd], &remains[fd][check + 1], BUFFER_SIZE + 1);

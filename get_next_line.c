@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 10:24:06 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/10/31 16:47:29 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/11/08 13:48:11 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*add_to_line(char *res, char *remains, int *check, int fd)
 		len_to_add = ft_len_to_add(buf);
 		ft_strlcpy(remains, &buf[(len_to_add)], BUFFER_SIZE + 1);
 		ft_strlcpy(buf, buf, len_to_add + 1);
-		res = ft_strjoin(res, buf, check);
+		res = join_strjoin(res, buf, check);
 		if (read_check == 0)
 		{
 			ft_bzero(remains, BUFFER_SIZE + 1);
@@ -67,7 +67,7 @@ char	*get_next_line(int fd)
 	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE < 1)
 		return (NULL);
 	check = -1;
-	res = ft_strdup(remains, &check);
+	res = join_strdup(remains, &check);
 	if (!res)
 		return (NULL);
 	ft_strlcpy(remains, &remains[check + 1], BUFFER_SIZE + 1);

@@ -6,7 +6,7 @@
 /*   By: hdelmas <hdelmas@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 11:19:16 by hdelmas           #+#    #+#             */
-/*   Updated: 2022/11/08 13:40:39 by hdelmas          ###   ########.fr       */
+/*   Updated: 2022/11/08 13:47:20 by hdelmas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ char	*join_strjoin(char *s1, char *s2, int *check)
 	j = -1;
 	while (s1[++j])
 		strjoin[i++] = s1[j];
+	free(s1);
 	j = -1;
 	while (s2[++j])
 		strjoin[i++] = s2[j];
